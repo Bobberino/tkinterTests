@@ -38,7 +38,10 @@ class CardPile:
     # the following are sometimes overridden
     # includes if for the gui to select the card
     def includes(self, tx, ty):
-        return self.x <= tx <= self.x + Card.width and self.y <= ty <= self.y + Card.height
+        return self.x <= tx and \
+                tx <= self.x + Card.width and \
+                self.y <= ty and \
+                ty <= self.y + Card.height
 
     def select(self, tx, ty):
         pass
@@ -47,13 +50,9 @@ class CardPile:
         self.thePile.append(a_card)
 
     def display(self):
-        # g.setColor(Color.blue)
         if self.is_empty():
-            self.canvas.create_rectangle(self.x, self.y, Card.width, Card.height, outline="blue")
-            # self.myCanvas.create_rect(self.x, self.y, Card.width, Card.height, fill="blue")
+            self.canvas.create_rectangle(self.x, self.y, self.x + Card.width, self.y + Card.height, outline="blue")
         else:
-            # callback???
-            # I moved
             self.top().draw(self.x, self.y, self.canvas)
 
     def can_take(self, a_card):

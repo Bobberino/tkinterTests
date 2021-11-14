@@ -1,5 +1,4 @@
 from card import Card
-from cardpile import CardPile
 from deckpile import DeckPile
 from discardpile import DiscardPile
 from suitpile import SuitPile
@@ -7,30 +6,27 @@ from tablepile import TablePile
 
 from tkinter import *
 
-# What are the funny shaped blue squares at the top?
 
-# When I pick up a card in the table pile, move it in the
-# same click, and clean up where the card was.
-# The Discard Pile does this correctly.
-
+# make methoc calls consistent
+# Then enhance - move multiple cards
 
 class Solitaire(Frame):
-
-    # Should these be static???
     deckPile = []
     discardPile = []
     tableau = []
     suitPile = []
     cardPile = []  # CardPile
 
-    frameWidth = 450
-    frameHeight = 600
     deckPileX = 335
     deckPileY = 30
     discardPileX = 268
     discardPileY = 30
     suitPileY = 30
     tablePileY = Card.height + 35
+
+    frameWidth = 450
+    frameHeight = 600
+
     cardPileSize = 13
     suitPileSize = 4
     tableauSize = 7
@@ -39,13 +35,13 @@ class Solitaire(Frame):
         Frame.__init__(self)
         self.pack(expand=YES, fill=BOTH)
         self.master.title("Python Solitaire!!")
-        self.master.geometry("600x600")
+        self.master.geometry(f"{Solitaire.frameWidth}x{Solitaire.frameHeight}")
 
         # Restart
-        self.restart_button = Button(self, text="Restart", command=self.init)
+        self.restart_button = Button(self, text="Restart", command=self.restart)
         self.restart_button.pack(side=BOTTOM)
 
-        self.myCanvas = Canvas(self, width=400, height=400, background="bisque")
+        self.myCanvas = Canvas(self, width=Solitaire.frameWidth, height=Solitaire.frameHeight, background="bisque")
         self.myCanvas.pack(side="bottom", fill="both", expand=True)
 
         self.myCanvas.bind("<Button-1>", self.mouse_pressed)
@@ -57,13 +53,23 @@ class Solitaire(Frame):
         print("Deckpile size is: ", len(self.deckPile.thePile))
         print("Discardpile size is: ", len(self.discardPile.thePile))
 
-        # print size of 7 table piles
-        # add 4 suitpiles
+    def restart(self):
+        Solitaire.deckPile.clear()
+        Solitaire.discardPile.clear()
+        Solitaire.tableau.clear()
+        Solitaire.suitPile.clear()
+        Solitaire.cardPile.clear()  # CardPile
+
+        self.allPiles.clear()
+
+        self.myCanvas.delete('all')
+        self.init()
 
     def init(self):
         print("in init")
-        # change self to Solitaire
-        # then fill the arrays in
+
+        self.myCanvas.update()  # Force canvas update
+        self.myCanvas.delete('all')
 
         self.deckPile = DeckPile(Solitaire.deckPileX, Solitaire.deckPileY, self, self.myCanvas)
         self.allPiles.append(self.deckPile)
@@ -75,26 +81,11 @@ class Solitaire(Frame):
             self.allPiles.append(Solitaire.suitPile[i])
 
         for i in range(7):
-            self.tableau.append(TablePile(15 + (Card.width + 5) * i, Card.height + 35, i + 1, self, self.myCanvas))
+            self.tableau.append(TablePile(15 + (Card.width + 5) * i, Solitaire.tablePileY, i + 1, self, self.myCanvas))
             self.allPiles.append(self.tableau[i])
 
-        for i in range(13):
-            self.allPiles[i].display()
-        '''
-        self.deckPile.display()
-        self.discardPile.display()
-        self.suitPile[0].display()
-        self.suitPile[1].display()
-        self.suitPile[2].display()
-        self.suitPile[3].display()
-        self.tableau[0].display()
-        self.tableau[1].display()
-        self.tableau[2].display()
-        self.tableau[3].display()
-        self.tableau[4].display()
-        self.tableau[5].display()
-        self.tableau[6].display()
-        '''
+        self.paint_screen()
+
     # @staticmethod
     def mouse_pressed(self, event):
         # get mouse click position
@@ -104,6 +95,11 @@ class Solitaire(Frame):
             if self.allPiles[i].includes(x, y):
                 self.allPiles[i].select(x, y)
 
+                self.paint_screen()
+
+    def paint_screen(self):
+        self.myCanvas.delete('all')
+        for i in range(13):
             self.allPiles[i].display()
 
 

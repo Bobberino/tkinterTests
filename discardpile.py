@@ -15,10 +15,9 @@ class DiscardPile(CardPile):
         self.main = main
 
     def add_card(self, a_card):
-
-        if not a_card.face_up:
+        if not a_card.face_up:  # use method instead??
             a_card.flip()
-        self.thePile.append(a_card)
+        self.thePile.append(a_card)  # self.add_card???
 
     def select(self, tx, ty):
         if self.is_empty():

@@ -26,10 +26,10 @@ class DeckPile(CardPile):
         # shuffle the list
         # load the deque from the shuffled list
         # shuffle the cards
-        # random.shuffle(self.localList)
+        random.shuffle(self.thePile)
 
-        # for card in self.localList:
-        #     self.add_car(d(card)
+        # for card in self.thePile:
+        #      self.add_card(card)
         # card = Card(0, 0)
         # card.flip()
 

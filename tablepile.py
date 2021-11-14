@@ -23,7 +23,17 @@ class TablePile(CardPile):
 
     def includes(self, tx, ty):
         # don't test bottom of card
-        return self.x <= tx and tx <= self.x + Card.width and self.y <= ty
+        return self.x <= tx and \
+               tx <= (self.x + Card.width) and \
+               self.y <= ty
+
+    def can_take(self, a_card):
+        if len(self.thePile) == 0:
+            return a_card.rank() == 12
+
+        top_card = self.top()
+        return (a_card.color() != top_card.color()) and \
+               (a_card.rank() == top_card.rank() - 1)
 
     def select(self, tx, ty):
 
@@ -34,7 +44,9 @@ class TablePile(CardPile):
         # if face down, then flip
         top_card = self.top()
         if not top_card.faceUp():
+            print("if not top_card.faceUp()")
             top_card.flip()
+            print("Top card flipped, returning...")
             return
 
             # See if any suit pile can take top card
@@ -45,26 +57,19 @@ class TablePile(CardPile):
                 return
 
         for tb in self.main.tableau:
+            print("For tb in self.main.tableau")
             if tb.can_take(top_card):
+                print("tb.can_take(top_card_)")
                 tb.add_card(top_card)
+                print("tb.add_card(top_card)")
                 return
 
         # else put it back on our pile
         self.add_card(top_card)
 
     def display(self):
-
         local_y = self.y
-
         for aCard in self.thePile:
             aCard.draw(self.x, local_y, self.canvas)
             local_y += 35
-
-    def can_take(self, a_card):
-        if len(self.thePile) == 0:
-            return a_card.rank() == 12
-
-        top_card = self.top()
-        return (a_card.color() != top_card.color()) and \
-               (a_card.rank() == top_card.rank() - 1)
 

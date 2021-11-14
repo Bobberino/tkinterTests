@@ -11,9 +11,6 @@ class Card:
 
     def __init__(self, sv, rv):
 
-        # private boolean face_up;x
-        # private final int r;
-        # private final int s;
         self.s = sv
         self.r = rv
         self.face_up = False
@@ -49,9 +46,7 @@ class Card:
 
         # draw body of card
         # get the color, red or black
-        # g.setColor(self.color())
-        # canvas.create_text(20, 30, anchor=W, font="Purisa",
-        #                   text="Most relationships seem so transitory")
+
         if self.faceUp():
             canvas.create_text(x + 5, y + 15, text=names[self.rank()], fill=self.color())
             if self.suit() == self.heart:
@@ -75,9 +70,9 @@ class Card:
                 canvas.create_line(x + 40, y + 35, x + 25, y + 55, fill=self.color())
                 canvas.create_line(x + 25, y + 55, x + 10, y + 35, fill=self.color())
             elif self.suit() == self.club:
-                # canvas.create_oval(x + 20, y + 25, 10, 10, outline=self.color())
-                # canvas.create_oval(x + 25, y + 35, 10, 10, outline=self.color())
-                # canvas.create_oval(x + 15, y + 35, 10, 10, outline=self.color())
+                canvas.create_oval(x + 20, y + 25, x+30, y+35, outline=self.color())
+                canvas.create_oval(x + 25, y + 35, x+35, y+45, outline=self.color())
+                canvas.create_oval(x + 15, y + 35, x+35, y+45, outline=self.color())
                 # Base
                 canvas.create_line(x + 23, y + 45, x + 20, y + 55, fill=self.color())
                 canvas.create_line(x + 20, y + 55, x + 30, y + 55, fill=self.color())

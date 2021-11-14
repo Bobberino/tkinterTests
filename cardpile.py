@@ -1,0 +1,60 @@
+# need to handle the display method - Tkinter or PyGame
+
+'''
+Stack
+empty() – Returns whether the stack is empty – Time Complexity: O(1)
+size() – Returns the size of the stack – Time Complexity: O(1)
+top() – Returns a reference to the topmost element of the stack – Time Complexity: O(1)
+push(a) – Inserts the element ‘a’ at the top of the stack – Time Complexity: O(1)
+pop() – Deletes the topmost element of the stack – Time Complexity: O(1)
+'''
+
+from card import Card
+
+
+class CardPile:
+
+    def __init__(self, xl, yl, canvas):
+        self.canvas = canvas
+        self.x = xl
+        self.y = yl
+        self.thePile = []  # keep simple for noa then emulate a Stack<>()
+
+    def top(self):
+        return self.thePile[-1]  # Card
+
+    def is_empty(self):
+        if len(self.thePile) == 0:  # length 0
+            return True
+        else:
+            return False
+
+    def pop(self):
+        if self.is_empty():
+            return None
+        else:
+            return self.thePile.pop()
+
+    # the following are sometimes overridden
+    # includes if for the gui to select the card
+    def includes(self, tx, ty):
+        return self.x <= tx <= self.x + Card.width and self.y <= ty <= self.y + Card.height
+
+    def select(self, tx, ty):
+        pass
+
+    def add_card(self, a_card):
+        self.thePile.append(a_card)
+
+    def display(self):
+        # g.setColor(Color.blue)
+        if self.is_empty():
+            self.canvas.create_rectangle(self.x, self.y, Card.width, Card.height, outline="blue")
+            # self.myCanvas.create_rect(self.x, self.y, Card.width, Card.height, fill="blue")
+        else:
+            # callback???
+            # I moved
+            self.top().draw(self.x, self.y, self.canvas)
+
+    def can_take(self, a_card):
+        return False

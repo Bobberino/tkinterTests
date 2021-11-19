@@ -7,7 +7,8 @@ from tablepile import TablePile
 from tkinter import *
 
 
-# make methoc calls consistent
+# make method calls consistent
+# remove print statements
 # Then enhance - move multiple cards
 
 class Solitaire(Frame):
@@ -88,6 +89,7 @@ class Solitaire(Frame):
 
     # @staticmethod
     def mouse_pressed(self, event):
+        print("Mouse Pressed event type: ", type(event))
         # get mouse click position
         x = event.x
         y = event.y

@@ -36,8 +36,6 @@ class TablePile(CardPile):
                (a_card.rank() == top_card.rank() - 1)
 
     def select(self, tx, ty):
-
-        # print("In TablePile select: " + str(tx) + " " + str(ty))
         if self.is_empty():
             return
 

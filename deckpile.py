@@ -28,14 +28,9 @@ class DeckPile(CardPile):
         # shuffle the cards
         random.shuffle(self.thePile)
 
-        # for card in self.thePile:
-        #      self.add_card(card)
-        # card = Card(0, 0)
-        # card.flip()
-
     def select(self, tx, ty):
         # if self.thePile.is_empty():
-        if len(self.thePile) == 0:
+        if self.is_empty():  # self.empty
             return
 
         temp = self.thePile.pop()
